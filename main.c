@@ -5,10 +5,11 @@
 #include "nrf_delay.h"
 
 int main(void) {
+    /* Initialise LEDs and set to off*/
     nrf_gpio_cfg_output(17);
     nrf_gpio_cfg_output(19);
-    nrf_gpio_pin_write(17, 1);
-    nrf_gpio_pin_write(19, 1);
+    nrf_gpio_pin_write(17, 0);
+    nrf_gpio_pin_write(19, 0);
 
     /* Toggle LEDs. */
     while (true)
