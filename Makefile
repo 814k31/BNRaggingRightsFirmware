@@ -1,11 +1,15 @@
 PROJECT_NAME := blinky_test
 
+BASH := /bin/bash 
+
 export OUTPUT_FILENAME
 #MAKEFILE_NAME := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 MAKEFILE_NAME := $(MAKEFILE_LIST)
 MAKEFILE_DIR := $(dir $(MAKEFILE_NAME) ) 
 
 TEMPLATE_PATH = /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/gcc
+
+SDK_ROOT = /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197
 
 include ./Makefile.posix
 
@@ -38,17 +42,60 @@ C_SOURCE_FILES += \
 $(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/system_nrf52.c) \
 $(abspath ./main.c) \
 $(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/drivers_nrf/delay/nrf_delay.c) \
+$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/ble/ble_advertising.c) \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = $(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/gcc/gcc_startup_nrf52.s)
 
+
+# /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/
+
+# INC_PATHS = -I$(shell find /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/ -name '*' -o -name '*.h' -o -name '*.o' -o -name '*.s')
+# INC_PATHS = $(shell find /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/ -name '*' -o -name '*.h' -o -name '*.o' -o -name '*.s')
 #includes common to all targets
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/gcc)
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain)
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/device)
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/drivers_nrf/delay)
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/CMSIS/Include)
-INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/drivers_nrf/hal)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/gcc)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/device)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/drivers_nrf/delay)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/toolchain/CMSIS/Include)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/drivers_nrf/hal)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/ble/common)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/ble/ble_advertising)
+# INC_PATHS += -I$(abspath /Users/814k31/Develop/nRF5_SDK_11.0.0_89a8197/components/*)
+
+
+
+# INC_PATHS  = -I$(abspath ../../../config/ble_app_template_s132_pca10040)
+# INC_PATHS += -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/config)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/timer)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/fstorage/config)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/delay)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/softdevice/s132/headers/nrf52)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/util)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/ble/device_manager)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/uart)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/ble/common)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/sensorsim)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/uart)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/device)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/button)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/fstorage)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/experimental_section_vars)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/softdevice/s132/headers)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/gpiote)
+# INC_PATHS += -I$(abspath $(SDK_ROOT)/examples/bsp)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/toolchain/CMSIS/Include)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/hal)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/toolchain/gcc)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/toolchain)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/drivers_nrf/common)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/ble/ble_advertising)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/libraries/trace)
+INC_PATHS += -I$(abspath $(SDK_ROOT)/components/softdevice/common/softdevice_handler)
+
+
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -112,6 +159,11 @@ ASMFLAGS += -DNRF52_PAN_62
 ASMFLAGS += -DNRF52_PAN_63
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DBSP_DEFINES_ONLY
+
+
+testfine:
+	@echo $(INC_PATHS)
+
 
 #default target - first one defined
 default: clean nrf52832_xxaa
