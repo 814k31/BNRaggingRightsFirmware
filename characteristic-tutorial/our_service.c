@@ -157,8 +157,8 @@ void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *te
 		hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
 		hvx_params.offset = 0;
 		hvx_params.p_len  = &len;
-		hvx_params.p_data = (uint8_t*)temperature_value;  
-
+		hvx_params.p_data = (uint8_t*)temperature_value;
+		// hvx_params.p_data = foodValue;
 		sd_ble_gatts_hvx(p_our_service->conn_handle, &hvx_params);
 	}
 }
