@@ -57,6 +57,7 @@ static uint32_t our_char_add(ble_os_t * p_our_service)
 	char_uuid.uuid      = BLE_UUID_OUR_CHARACTERISTC_UUID;
 	err_code = sd_ble_uuid_vs_add(&base_uuid, &char_uuid.type);
 	APP_ERROR_CHECK(err_code);   
+	uint8_t value[4] = {0xCA,0xFE,0xBA,0xBE};
 
 
     // OUR_JOB: Step 2.F Add read/write properties to our characteristic
@@ -93,9 +94,10 @@ static uint32_t our_char_add(ble_os_t * p_our_service)
     // OUR_JOB: Step 2.H, Set characteristic length in number of bytes
 	attr_char_value.max_len     = 4;
 	attr_char_value.init_len    = 4;
-	uint8_t value[4]            = {0x12,0x34,0x56,0x78};
+	// SEGGER_RTT_printf(0, "FoodValue: 0x%x\n\n\n\n", foodValue);
 	attr_char_value.p_value     = value;
 
+	SEGGER_RTT_printf(0, "p_value: 0x%x\n\n\n\n", attr_char_value.p_value);
     // OUR_JOB: Step 2.E, Add our new characteristic to the service
 	err_code = sd_ble_gatts_characteristic_add(p_our_service->service_handle,
                                    &char_md,
@@ -108,6 +110,7 @@ static uint32_t our_char_add(ble_os_t * p_our_service)
 
 void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
 {
+	SEGGER_RTT_printf(0, "ble_our_service_on_ble_evt\n\n");
 	switch (p_ble_evt->header.evt_id)
 	{
 	    case BLE_GAP_EVT_CONNECTED:
@@ -171,4 +174,10 @@ void our_service_init(ble_os_t * p_our_service)
 	SEGGER_RTT_printf(0, "Service UUID: 0x%#04x\n", service_uuid.uuid); // Print service UUID should match definition BLE_UUID_OUR_SERVICE
 	SEGGER_RTT_printf(0, "Service UUID type: 0x%#02x\n", service_uuid.type); // Print UUID type. Should match BLE_UUID_TYPE_VENDOR_BEGIN. Search for BLE_UUID_TYPES in ble_types.h for more info
 	SEGGER_RTT_printf(0, "Service handle: 0x%#04x\n", p_our_service->service_handle); // Print out the service handle. Should match service handle shown in MCP under Attribute values
+}
+
+void printFoodValue() {
+	// SEGGER_RTT_printf(0, "FoodValue: 0x%#04x\n", foodValue);
+	SEGGER_RTT_printf(0, "foodValue %04x", (unsigned int) foodValue[1] | (unsigned int) foodValue[0] << 8);
+	SEGGER_RTT_printf(0, "%04x\n", (unsigned int) foodValue[3] | (unsigned int) foodValue[2] << 8);
 }

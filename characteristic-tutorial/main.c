@@ -144,6 +144,7 @@ static void timer_timeout_handler(void * p_context)
     sd_temp_get(&temperature);
     our_termperature_characteristic_update(&m_our_service, &temperature);
     SEGGER_RTT_printf(0, "AFTER TEMP UPDATE %d\n", temperature);
+    printFoodValue();
 }
 
 /**@brief Function for the Timer initialization.
@@ -338,6 +339,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         default:
             // No implementation needed.
+            SEGGER_RTT_printf(0, "Unknown Event\n");
             break;
     }
 }

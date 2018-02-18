@@ -43,6 +43,8 @@
 #define BLE_UUID_OUR_BASE_UUID              {0x23, 0xD1, 0x13, 0xEF, 0x5F, 0x78, 0x23, 0x15, 0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00} // 128-bit base UUID
 #define BLE_UUID_OUR_SERVICE                0xF00D // Just a random, but recognizable value
 #define BLE_UUID_OUR_CHARACTERISTC_UUID     0xBEEF
+
+static uint8_t foodValue[4] = {0xCA,0xFE,0xBA,0xBA};
 /**
  * @brief This structure contains various status information for our service. 
  * It only holds one entry now, but will be populated with more items as we go.
@@ -65,6 +67,6 @@ void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *te
  * @param[in]   p_our_service       Pointer to Our Service structure.
  */
 void our_service_init(ble_os_t * p_our_service);
-
+void printFoodValue();
 
 #endif  /* _ OUR_SERVICE_H__ */
