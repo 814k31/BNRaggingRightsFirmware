@@ -84,6 +84,19 @@ static void flash_word_write(uint32_t * address, uint32_t value)
 }
 
 
+uint32_t flash_word_read(uint32_t* address)
+{
+
+	   for(i=0;i<4096;){
+
+	    addr++;
+
+	     printf("flash data:%d %c \r\n",i,*addr);
+
+	     i=i+4;
+
+	  }
+}
 
 int fakeMain(void)
 {
