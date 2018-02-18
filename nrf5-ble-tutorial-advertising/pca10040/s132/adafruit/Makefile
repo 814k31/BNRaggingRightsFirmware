@@ -5,9 +5,9 @@ export OUTPUT_FILENAME
 MAKEFILE_NAME := $(MAKEFILE_LIST)
 MAKEFILE_DIR := $(dir $(MAKEFILE_NAME) ) 
 
-SDK_PATH = ~/Develop/nRF5_SDK_11.0.0_89a8197
+SDK_PATH := ~/Develop/nRF5_SDK_11.0.0_89a8197
 
-TEMPLATE_PATH = $(SDK_PATH)/components/toolchain/gcc
+TEMPLATE_PATH := $(SDK_PATH)/components/toolchain/gcc
 ifeq ($(OS),Windows_NT)
 include $(TEMPLATE_PATH)/Makefile.windows
 else
@@ -216,6 +216,7 @@ sdkpath:
 	@echo C_PATHS = $(C_PATHS)
 	@echo 
 	@echo C_OBJECTS = $(C_OBJECTS)
+	@echo
 
 
 nrf52832_xxaa_s132: sdkpath $(BUILD_DIRECTORIES) $(OBJECTS)
