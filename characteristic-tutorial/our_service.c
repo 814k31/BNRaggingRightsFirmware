@@ -41,8 +41,6 @@
 #include "app_error.h"
 #include "SEGGER_RTT.h"
 
-
-
 /**@brief Function for adding our new characterstic to "Our service" that we initiated in the previous tutorial. 
  *
  * @param[in]   p_our_service        Our Service structure.
