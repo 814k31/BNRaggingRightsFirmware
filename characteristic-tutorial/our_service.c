@@ -117,10 +117,32 @@ void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
 	    case BLE_GAP_EVT_DISCONNECTED:
 	        p_our_service->conn_handle = BLE_CONN_HANDLE_INVALID;
 	        break;
-	    default:
-	        // No implementation needed.
-	        break;
-	}
+		case BLE_GATTS_EVT_WRITE:
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_WRITE 0x%02x\n", p_ble_evt->evt.gatts_evt.params.write.handle);
+			// on_write(p_sws, p_ble_evt);
+			break;
+
+		case BLE_GATTS_EVT_HVC:
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_HVC\n");
+			break;
+			/*		sd_ble_gattc_char_value_by_uuid_read(p_sws->conn_handle,p_ble_evt->evt.gap_)*/
+			/**< Write operation performed. @ref ble_gatts_evt_write_t */
+		case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:             /**< Read/Write Authorization request.@ref ble_gatts_evt_rw_authorize_request_t */
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST\n");
+			break;
+		case BLE_GATTS_EVT_SYS_ATTR_MISSING:                 /**< A persistent system attribute access is pending: awaiting a sd_ble_gatts_sys_attr_set(). @ref ble_gatts_evt_sys_attr_missing_t */
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_SYS_ATTR_MISSING\n");
+			break;
+		case BLE_GATTS_EVT_SC_CONFIRM:                       /**< Service Changed Confirmation. No additional event structure applies. */
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_SC_CONFIRM\n");
+			break;
+		case BLE_GATTS_EVT_TIMEOUT:                           /**< Timeout. @ref ble_gatts_evt_timeout_t */
+			SEGGER_RTT_printf(0, "BLE_GATTS_EVT_TIMEOUT\n");
+			break;
+		default:
+			// No implementation needed.
+			break;
+		}
 }
 
 void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *temperature_value)
