@@ -1,4 +1,4 @@
-PROJECT_NAME := blinky_test
+PROJECT_NAME := BNRaggingRights-Firmware
 
 export OUTPUT_FILENAME
 #MAKEFILE_NAME := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
