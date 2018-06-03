@@ -271,6 +271,9 @@ cleanobj:
 # 	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf52  --sectorerase
 # 	nrfjprog --reset -f nrf52
 
+build: nrf52832_xxaa
+	@echo Built: ${PROJECT_NAME}
+
 dfu: nrf52832_xxaa
 	@echo Serial DFU Adafruit: $(OUTPUT_BINARY_DIRECTORY)/$<.zip
 	nrfutil dfu genpkg --dev-type 0x0052 --application _build/nrf52832_xxaa.hex _build/dfu-package.zip
