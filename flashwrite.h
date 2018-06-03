@@ -14,12 +14,8 @@
 #include <stdio.h>
 #include "nrf.h"
 #include "bsp.h"
-#include "app_uart.h"
 #include "app_error.h"
 #include "nordic_common.h"
-
-#define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
 
 /** @brief Function for erasing a page in flash.
  *
@@ -34,9 +30,3 @@ static void flash_page_erase(uint32_t * page_address);
  * @param[in] value Value to be written to flash.
  */
 static void flash_word_write(uint32_t * address, uint32_t value);
-
-
-int fakeMain(void);
-
-
-/** @} */

@@ -58,6 +58,7 @@
 #include "ble_advdata.h"
 #include "ble_advertising.h"
 #include "nrf_delay.h"
+#include "flashwrite.h"
 #include "our_service.h"
 #include "SEGGER_RTT.h"
 
@@ -580,11 +581,18 @@ static void advertising_init(void)
 //     APP_ERROR_CHECK(err_code);
 // }
 
-
 /**@brief Function for application main entry.
  */
 int main(void)
 {
+    // uint32_t   pg_size = NRF_FICR->CODEPAGESIZE;
+    // uint32_t   pg_num = NRF_FICR->CODESIZE - 1;  // Use last page in flash
+
+    // Start address:
+    // addr = (uint32_t *)(pg_size * pg_num);
+    // Erase page:
+    // flash_page_erase(addr);
+
     nrf_gpio_cfg_output(17);
     nrf_gpio_cfg_output(19);
     
