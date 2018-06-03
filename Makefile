@@ -61,6 +61,7 @@ $(abspath $(SDK_PATH)/components/drivers_nrf/uart/nrf_drv_uart.c) \
 $(abspath $(SDK_PATH)/components/drivers_nrf/pstorage/pstorage.c) \
 $(abspath $(SDK_PATH)/examples/bsp/bsp.c) \
 $(abspath $(SDK_PATH)/examples/bsp/bsp_btn_ble.c) \
+$(abspath ./our_service.c) \
 $(abspath ./main.c) \
 $(abspath $(SDK_PATH)/components/ble/common/ble_advdata.c) \
 $(abspath $(SDK_PATH)/components/ble/ble_advertising/ble_advertising.c) \
