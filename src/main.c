@@ -113,7 +113,10 @@ APP_TIMER_DEF(m_our_char_timer_id);
 
 static bool prevIsConnected = false;
 static bool isConnected = false;
-// static bool isConnected = false;
+
+// static uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
+// static uint32_t pg_num = NRF_FICR->CODESIZE - 1;  // Use last page in flash
+// static uint32_t addr = (uint32_t *)(pg_size * pg_num);
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
