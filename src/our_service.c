@@ -41,33 +41,25 @@
 #include "app_error.h"
 #include "SEGGER_RTT.h"
 
-
-
-
-
-
-
-static void notify_char_update(ble_os_t *p_our_service, int32_t *value)
-{
-	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID)
-	{
-		uint16_t               len = 4;
-		ble_gatts_hvx_params_t hvx_params;
-		memset(&hvx_params, 0, sizeof(hvx_params));
+static void notify_char_update(ble_os_t *p_our_service, int32_t *value) {
+	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID) {
+		uint16_t length = 4;
 		uint8_t testValue = 0x0123BABE;
+		ble_gatts_hvx_params_t hvx_params;
 
+		memset(&hvx_params, 0, sizeof(hvx_params));
 		hvx_params.handle = p_our_service->char_handles.value_handle;
 		hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
 		hvx_params.offset = 0;
-		hvx_params.p_len  = &len;
+		hvx_params.p_len  = &length;
 		hvx_params.p_data = testValue;
 		// hvx_params.p_data = foodValue;
+
 		sd_ble_gatts_hvx(p_our_service->conn_handle, &hvx_params);
 	}
 }
 
-static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length)
-{
+static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length) {
 	// validate
 	if (length < 1) {
 		// SWS_PRINTF(RTT_ERROR_TEXT_DECORATOR("Bad data") + "\n");
@@ -146,21 +138,12 @@ static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length)
 	// }
 }
 
-
-
-
-
-
-
-
-
 /**@brief Function for adding our new characterstic to "Our service" that we initiated in the previous tutorial. 
  *
  * @param[in]   p_our_service        Our Service structure.
  *
  */
-static uint32_t our_char_add(ble_os_t * p_our_service)
-{
+static uint32_t our_char_add(ble_os_t * p_our_service) {
     // OUR_JOB: Step 2.A, Add a custom characteristic UUID
 	uint32_t            err_code;
 	ble_uuid_t          char_uuid;
@@ -169,7 +152,6 @@ static uint32_t our_char_add(ble_os_t * p_our_service)
 	err_code = sd_ble_uuid_vs_add(&base_uuid, &char_uuid.type);
 	APP_ERROR_CHECK(err_code);   
 	uint8_t value[4] = {0xCA,0xFE,0xBA,0xBE};
-
 
     // OUR_JOB: Step 2.F Add read/write properties to our characteristic
     ble_gatts_char_md_t char_md;
@@ -219,11 +201,9 @@ static uint32_t our_char_add(ble_os_t * p_our_service)
     return NRF_SUCCESS;
 }
 
-void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
-{
+void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt) {
 	SEGGER_RTT_printf(0, "ble_our_service_on_ble_evt\n\n");
-	switch (p_ble_evt->header.evt_id)
-	{
+	switch (p_ble_evt->header.evt_id) {
 	    case BLE_GAP_EVT_CONNECTED:
 	        p_our_service->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 	        break;
@@ -259,8 +239,7 @@ void ble_our_service_on_ble_evt(ble_os_t * p_our_service, ble_evt_t * p_ble_evt)
 }
 
 
-void on_write(ble_os_t* p_sws, ble_evt_t * p_ble_evt)
-{
+void on_write(ble_os_t* p_sws, ble_evt_t * p_ble_evt) {
 	SEGGER_RTT_printf(0, "value handles!!! 0x%02x, 0x%02x\n", p_ble_evt->evt.gatts_evt.params.write.handle, p_sws->char_handles.value_handle);
 
 	ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
@@ -293,21 +272,16 @@ void on_write(ble_os_t* p_sws, ble_evt_t * p_ble_evt)
 #endif*/
 }
 
-
-
-
-void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *temperature_value)
-{
-	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID)
-	{
-		uint16_t               len = 4;
+void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *temperature_value) {
+	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID) {
+		uint16_t length = 4;
 		ble_gatts_hvx_params_t hvx_params;
 		memset(&hvx_params, 0, sizeof(hvx_params));
 
 		hvx_params.handle = p_our_service->char_handles.value_handle;
 		hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
 		hvx_params.offset = 0;
-		hvx_params.p_len  = &len;
+		hvx_params.p_len  = &length;
 		hvx_params.p_data = (uint8_t*)temperature_value;
 		// hvx_params.p_data = foodValue;
 		sd_ble_gatts_hvx(p_our_service->conn_handle, &hvx_params);
@@ -319,8 +293,7 @@ void our_termperature_characteristic_update(ble_os_t *p_our_service, int32_t *te
  * @param[in]   p_our_service        Our Service structure.
  *
  */
-void our_service_init(ble_os_t * p_our_service)
-{
+void our_service_init(ble_os_t * p_our_service) {
     // STEP 3: Declare 16 bit service and 128 bit base UUIDs and add them to BLE stack table     
 	uint32_t   err_code;
 	ble_uuid_t        service_uuid;
