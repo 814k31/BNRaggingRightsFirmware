@@ -64,7 +64,7 @@ $(abspath $(SDK_PATH)/examples/bsp/bsp.c) \
 $(abspath $(SDK_PATH)/examples/bsp/bsp_btn_ble.c) \
 $(abspath ../../../src/flashwrite.c) \
 $(abspath ../../../src/our_service.c) \
-$(abspath ../../../src/blinky.c) \
+$(abspath ../../../src/main.c) \
 $(abspath $(SDK_PATH)/components/ble/common/ble_advdata.c) \
 $(abspath $(SDK_PATH)/components/ble/ble_advertising/ble_advertising.c) \
 $(abspath $(SDK_PATH)/components/ble/common/ble_conn_params.c) \
