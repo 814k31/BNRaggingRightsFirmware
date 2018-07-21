@@ -210,7 +210,7 @@ static void services_init(void) {
  *
  * @param[in] p_evt  Event received from the Connection Parameters Module.
  */
-static void on_conn_params_evt(ble_conn_params_evt_t * p_evt) {
+static void on_conn_params_evt(ble_conn_params_evt_t* p_evt) {
     uint32_t err_code;
 
     if (p_evt->evt_type == BLE_CONN_PARAMS_EVT_FAILED) {
@@ -532,6 +532,7 @@ int main(void) {
     ble_stack_init();
 
     device_manager_init(erase_bonds);
+
     gap_params_init();
     services_init();
     advertising_init();
