@@ -40,6 +40,7 @@
 #include "ble_srv_common.h"
 #include "app_error.h"
 #include "SEGGER_RTT.h"
+#include "flashwrite.h"
 
 static void notify_char_update(ble_os_t *p_our_service, int32_t *value) {
 	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID) {
@@ -72,70 +73,10 @@ static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length) {
 	// SWS_PRINTF("CALIB_CTRL_CMD_P0_WRITE\n");
 	uint32_t d_data = 0;
 	memcpy(&d_data, &p_data[0], sizeof(d_data));
-
-	notify_char_update(p_sws, d_data);
-
-
-	// update_p0(p_sws, reference_pressure);
-
-	// shockwiz_service_make_request(SS_REQ_WRITE_CONFIG |
-	// 							  SS_REQ_RECALC_CAL_PARAM);
-
-	// respond_calib_and_ctrl(CALIB_CTRL_CMD_P0_NOTIFY);
-
-
-
-	// switch (u8cmd) {
-	// case CALIB_CTRL_CMD_SRE_MODE_WRITE:
-	// 	{
-
-	// 		enum sre_mode mode = p_data[0];
-	// 		if (mode <= SRE_MODE_T_MAX) {
-	// 			p_sws->sre_mode = mode;
-	// 		}
-	// 		// Request write when possible
-	// 		shockwiz_service_make_request(SS_REQ_WRITE_CONFIG);
-
-	// 		respond_calib_and_ctrl(CALIB_CTRL_CMD_SRE_MODE_WRITE);
-
-	// 		break;
-	// 	}
-	// case CALIB_CTRL_CMD_SRE_MODE_READ:
-	// 	{
-	// 		SWS_PRINTF("CALIB_CTRL_CMD_SRE_MODE_READ\n");
-
-	// 		respond_calib_and_ctrl(CALIB_CTRL_CMD_SRE_MODE_READ);
-
-	// 		break;
-	// 	}
 	
-	// case CALIB_CTRL_CMD_P0_NOTIFY:
-	// 	{
-	// 		respond_calib_and_ctrl(CALIB_CTRL_CMD_P0_NOTIFY);
-	// 		break;
-	// 	}
-	// case CALIB_CTRL_CMD_P0_WRITE:
-	// 	{
-	// 		SWS_PRINTF("CALIB_CTRL_CMD_P0_WRITE\n");
-	// 		float reference_pressure = 0;
-	// 		memcpy(&reference_pressure, &p_data[0], sizeof(reference_pressure));
+	// flash_word_write(uint32_t* address, uint32_t value);
+	notify_char_update(p_sws, value);
 
-	// 		update_p0(p_sws, reference_pressure);
-
-	// 		SWS_PRINTF("Set reference pressure from app %d\r\n", (int)p_sws->sre.p0);
-
-	// 		shockwiz_service_make_request(SS_REQ_WRITE_CONFIG |
-	// 									  SS_REQ_RECALC_CAL_PARAM);
-
-	// 		respond_calib_and_ctrl(CALIB_CTRL_CMD_P0_NOTIFY);
-	// 		break;
-	// 	}
-	// default:
-	// 	{
-	// 		SWS_PRINTF(RTT_ERROR_TEXT_DECORATOR("Bad command")"\n");
-	// 		break;
-	// 	}
-	// }
 }
 
 /**@brief Function for adding our new characterstic to "Our service" that we initiated in the previous tutorial. 
