@@ -477,6 +477,35 @@ static void advertising_init(void) {
     APP_ERROR_CHECK(err_code);
 }
 
+
+int flashWrite()
+{
+    uint32_t * addr;
+
+    uint32_t   pg_size;
+    uint32_t   pg_num;
+
+    // APP_ERROR_CHECK(err_code);
+    SEGGER_RTT_printf(0, "FLASHWRITE Function BNR example\n\r");
+    // patold  = 0;
+    pg_size = NRF_FICR->CODEPAGESIZE;
+    pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash
+    addr = (uint32_t *)(pg_size * pg_num);
+    SEGGER_RTT_printf(0, "before erased addr %c\n", *addr);
+    flash_page_erase(addr);
+    SEGGER_RTT_printf(0, "read value before %c\n\n\n", *addr);
+    flash_word_write(addr, (uint32_t)'c');
+    SEGGER_RTT_printf(0, "read value after %c\n\n\n", *addr);
+
+    // while (true) {
+    //     // If not connected blink red light every half a second
+    //     nrf_gpio_pin_write(19, 0);
+    //     nrf_delay_ms(2000);
+    //     nrf_gpio_pin_write(19, 1);
+    //     nrf_delay_ms(2000);
+    // }
+}
+
 /**@brief Function for the Power manager.
  */
 /* static void power_manage(void)
@@ -499,6 +528,7 @@ int main(void) {
 
     // Initialize.
     timers_init();
+    flashWrite();
     ble_stack_init();
 
     device_manager_init(erase_bonds);
@@ -510,7 +540,7 @@ int main(void) {
     // Start execution.
     application_timers_start();
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
-    // SEGGER_RTT_printf(0, "Started Advertising\n");
+    SEGGER_RTT_printf(0, "Started Advertising\n");
     APP_ERROR_CHECK(err_code);
 
     // Enter main loop.
