@@ -73,6 +73,20 @@ $(abspath $(SDK_PATH)/components/ble/device_manager/device_manager_peripheral.c)
 $(abspath $(SDK_PATH)/components/toolchain/system_nrf52.c) \
 $(abspath $(SDK_PATH)/components/softdevice/common/softdevice_handler/softdevice_handler.c) \
 $(RTT_SRCS) \
+# Flash write source files
+# $(abspath ../../../../../components/toolchain/system_nrf52.c) \
+# $(abspath ../../main.c) \
+# $(abspath ../../../../../components/libraries/util/app_error.c) \
+# $(abspath ../../../../../components/libraries/util/app_error_weak.c) \
+C_SOURCE_FILES += \
+$(abspath ../../../../../components/libraries/fifo/app_fifo.c) \
+$(abspath ../../../../../components/libraries/uart/app_uart_fifo.c) \
+# $(abspath ../../../../../components/libraries/util/app_util_platform.c) \
+# $(abspath ../../../../../components/libraries/util/nrf_assert.c) \
+# $(abspath ../../../../../components/libraries/uart/retarget.c) \
+# $(abspath ../../../../../components/drivers_nrf/delay/nrf_delay.c) \
+# $(abspath ../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
+# $(abspath ../../../../../components/drivers_nrf/uart/nrf_drv_uart.c) \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = $(abspath $(SDK_PATH)/components/toolchain/gcc/gcc_startup_nrf52.s)
@@ -107,6 +121,21 @@ INC_PATHS += -I$(abspath $(SDK_PATH)/components/drivers_nrf/common)
 INC_PATHS += -I$(abspath $(SDK_PATH)/components/ble/ble_advertising)
 INC_PATHS += -I$(abspath $(SDK_PATH)/components/libraries/trace)
 INC_PATHS += -I$(abspath $(SDK_PATH)/components/softdevice/common/softdevice_handler)
+# Flash write includes
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/nrf_soc_nosd)
+# INC_PATHS += -I$(abspath ../../../../../components/device)
+# INC_PATHS += -I$(abspath ../../../../../components/libraries/uart)
+# INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/hal)
+# INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/delay)
+# INC_PATHS += -I$(abspath ../../../../../components/toolchain/CMSIS/Include)
+INC_PATHS += -I$(abspath ../..)
+# INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
+# INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/uart)
+# INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/common)
+# INC_PATHS += -I$(abspath ../../../../../components/toolchain)
+# INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/config)
+INC_PATHS += -I$(abspath ../../../../../components/libraries/fifo)
+# INC_PATHS += -I$(abspath ../../../../../components/toolchain/gcc)
 INC_PATHS += $(RTT_INC)
 
 OBJECT_DIRECTORY = _build
