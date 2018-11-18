@@ -34,4 +34,4 @@ void printFoodValue();
 void on_write(ble_os_t* p_sws, ble_evt_t* p_ble_evt);
 
 
-#endif  /* _ OUR_SERVICE_H__
+#endif  /* _ OUR_SERVICE_H__ */
