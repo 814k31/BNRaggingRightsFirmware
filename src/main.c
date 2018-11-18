@@ -496,14 +496,6 @@ int flashWrite()
     SEGGER_RTT_printf(0, "read value before %c\n\n\n", *addr);
     flash_word_write(addr, (uint32_t)'c');
     SEGGER_RTT_printf(0, "read value after %c\n\n\n", *addr);
-
-    // while (true) {
-    //     // If not connected blink red light every half a second
-    //     nrf_gpio_pin_write(19, 0);
-    //     nrf_delay_ms(2000);
-    //     nrf_gpio_pin_write(19, 1);
-    //     nrf_delay_ms(2000);
-    // }
 }
 
 /**@brief Function for the Power manager.
