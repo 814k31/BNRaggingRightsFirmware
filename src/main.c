@@ -1,36 +1,3 @@
-
-// # RTT build config
-// RTT_SRCS = $(RTT_DIR)/RTT/SEGGER_RTT.c \
-//      $(RTT_DIR)/RTT/SEGGER_RTT_printf.c
-
-// RTT_INC = -I $(RTT_DIR)/RTT
-
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
- */
-
-/** @file
- *
- * @defgroup ble_sdk_app_template_main main.c
- * @{
- * @ingroup ble_sdk_app_template
- * @brief Template project main file.
- *
- * This file contains a template for creating a new application. It has the code necessary to wakeup
- * from button, advertise, get a connection restart advertising on disconnect and if no new
- * connection created go back to system-off mode.
- * It can easily be used as a starting point for creating a new application, the comments identified
- * with 'YOUR_JOB' indicates where and how you can customize.
- */
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
@@ -50,8 +17,6 @@
 #include "device_manager.h"
 #include "pstorage.h"
 #include "app_trace.h"
-// #include "bsp.h"
-// #include "bsp_btn_ble.h"
 #include "sensorsim.h"
 #include "nrf_gpio.h"
 #include "ble_hci.h"
@@ -125,12 +90,12 @@ static bool isConnected = false;
  * @param[in] line_num   Line number of the failing ASSERT call.
  * @param[in] file_name  File name of the failing ASSERT call.
  */
-void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name) {
+void assert_nrf_callback(uint16_t line_num, const uint8_t* p_file_name) {
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
-/*ALREADY_DONE_FOR_YOU: This is a timer event handler*/
-static void timer_timeout_handler(void * p_context) {
+// Timer event handler
+static void timer_timeout_handler(void* p_context) {
     if (!isConnected) return;
     // OUR_JOB: Step 3.F, Update temperature and characteristic value.
     int32_t temperature = 0;
@@ -140,10 +105,8 @@ static void timer_timeout_handler(void * p_context) {
     printFoodValue();
 }
 
-/**@brief Function for the Timer initialization.
- *
- * @details Initializes the timer module. This creates and starts application timers.
- */
+// Function for the Timer initialization.
+// Initializes the timer module. This creates and starts application timers.
 static void timers_init(void) {
     /* Initialize timer module.*/
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
@@ -152,11 +115,10 @@ static void timers_init(void) {
 }
 
 
-/**@brief Function for the GAP initialization.
- *
- * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the
- *          device including the device name, appearance, and the preferred connection parameters.
- */
+// Function for the GAP initialization.
+
+// This function sets up all the necessary GAP (Generic Access Profile) parameters of the
+// device including the device name, appearance, and the preferred connection parameters.
 static void gap_params_init(void) {
     uint32_t err_code;
     
@@ -192,10 +154,9 @@ static void gap_params_init(void) {
     APP_ERROR_CHECK(err_code);// Check for errors
 }
 
-/**@brief Function for initializing services that will be used by the application.
- */
+// Function for initializing services that will be used by the application.
 static void services_init(void) {
-    // STEP 2: Add code to initialize the services used by the application.
+    // Add code to initialize the services used by the application.
     our_service_init(&m_our_service);
 }
 
@@ -219,17 +180,13 @@ static void on_conn_params_evt(ble_conn_params_evt_t* p_evt) {
     }
 }
 
-/**@brief Function for handling a Connection Parameters error.
- *
- * @param[in] nrf_error  Error code containing information about what went wrong.
- */
+// Function for handling a Connection Parameters error.
+// nrf_error  Error code containing information about what went wrong.
 static void conn_params_error_handler(uint32_t nrf_error) {
     APP_ERROR_HANDLER(nrf_error);
 }
 
-
-/**@brief Function for initializing the Connection Parameters module.
- */
+// Function for initializing the Connection Parameters module.
 static void conn_params_init(void) {
     uint32_t err_code;
     ble_conn_params_init_t cp_init;
@@ -250,15 +207,12 @@ static void conn_params_init(void) {
 }
 
 static void application_timers_start(void) {
-    // OUR_JOB: Step 3.I, Start our timer
     app_timer_start(m_our_char_timer_id, OUR_CHAR_TIMER_INTERVAL, NULL);
 }
 
 
-/**@brief Function for putting the chip into sleep mode.
- *
- * @note This function will not return.
- */
+// Function for putting the chip into sleep mode.
+// This function will not return.
 static void sleep_mode_enter(void) {
     /*uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
     APP_ERROR_CHECK(err_code);
@@ -273,12 +227,9 @@ static void sleep_mode_enter(void) {
 }
 
 
-/**@brief Function for handling advertising events.
- *
- * @details This function will be called for advertising events which are passed to the application.
- *
- * @param[in] ble_adv_evt  Advertising event.
- */
+// Function for handling advertising events.
+// This function will be called for advertising events which are passed to the application.
+// ble_adv_evt  Advertising event.
 static void on_adv_evt(ble_adv_evt_t ble_adv_evt) {
     switch (ble_adv_evt) {
         case BLE_ADV_EVT_FAST:
@@ -292,12 +243,9 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt) {
     }
 }
 
-
-/**@brief Function for handling the Application's BLE Stack events.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
- */
-static void on_ble_evt(ble_evt_t * p_ble_evt) {
+// Function for handling the Application's BLE Stack events.
+// p_ble_evt  Bluetooth stack event.
+static void on_ble_evt(ble_evt_t* p_ble_evt) {
     SEGGER_RTT_printf(0, "on_ble_evt %u\n", p_ble_evt->header.evt_id);
     switch (p_ble_evt->header.evt_id) {
         case BLE_GAP_EVT_CONNECTED:
@@ -315,21 +263,17 @@ static void on_ble_evt(ble_evt_t * p_ble_evt) {
             break;
 
         default:
-            /*No implementation needed.*/
+            /* No implementation needed. */
             /* SEGGER_RTT_printf(0, "Unknown Event\n");*/
             break;
     }
 }
 
-
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
- *          event has been received.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt) {
+// Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
+// This function is called from the BLE Stack event interrupt handler after a BLE stack
+// event has been received.
+// p_ble_evt  Bluetooth stack event.
+static void ble_evt_dispatch(ble_evt_t* p_ble_evt) {
     dm_ble_evt_handler(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     /* bsp_btn_ble_on_ble_evt(p_ble_evt); */
@@ -339,39 +283,35 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt) {
 }
 
 
-/**@brief Function for dispatching a system event to interested modules.
- *
- * @details This function is called from the System event interrupt handler after a system
- *          event has been received.
- *
- * @param[in] sys_evt  System stack event.
- */
+// Function for dispatching a system event to interested modules.
+
+// This function is called from the System event interrupt handler after a system
+// event has been received.
+// sys_evt  System stack event.
 static void sys_evt_dispatch(uint32_t sys_evt) {
     pstorage_sys_event_handler(sys_evt);
     ble_advertising_on_sys_evt(sys_evt);
 }
 
 
-/**@brief Function for initializing the BLE stack.
- *
- * @details Initializes the SoftDevice and the BLE event interrupt.
- */
+// Function for initializing the BLE stack.
+// Initializes the SoftDevice and the BLE event interrupt.
 static void ble_stack_init(void) {
     uint32_t err_code;
-    
+
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
     /* Initialize the SoftDevice handler module. */
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-    
+
     ble_enable_params_t ble_enable_params;
     err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT, PERIPHERAL_LINK_COUNT, & ble_enable_params);
 
     APP_ERROR_CHECK(err_code);
-    
+
     /* Check the ram settings against the used number of links */
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
-    
+
     /* Enable BLE stack. */
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -392,10 +332,8 @@ static void ble_stack_init(void) {
     APP_ERROR_CHECK(err_code);
 }
 
-/**@brief Function for handling the Device Manager events.
- *
- * @param[in] p_evt  Data associated to the device manager event.
- */
+// Function for handling the Device Manager events.
+// p_evt  Data associated to the device manager event.
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
     dm_event_t const* p_event, ret_code_t event_result) {
 
@@ -410,11 +348,9 @@ static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
 }
 
 
-/**@brief Function for the Device Manager initialization.
- *
- * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
- *                         persistent storage during initialization of the Device Manager.
- */
+// Function for the Device Manager initialization.
+// erase_bonds: Indicates whether bonding information should be cleared from
+//              persistent storage during initialization of the Device Manager.
 static void device_manager_init(bool erase_bonds) {
     uint32_t err_code;
     dm_init_param_t init_param = {.clear_persistent_data = erase_bonds};
@@ -511,7 +447,7 @@ int flashWrite()
 int main(void) {
     nrf_gpio_cfg_output(17);
     nrf_gpio_cfg_output(19);
-    
+
     nrf_gpio_pin_write(17, 0);
     nrf_gpio_pin_write(19, 0);
 
