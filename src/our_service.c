@@ -26,21 +26,21 @@ static void notify_char_update(ble_os_t *p_our_service, int32_t *value) {
 }
 
 static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length) {
-	// validate
-	if (length < 1) {
-		// SWS_PRINTF(RTT_ERROR_TEXT_DECORATOR("Bad data") + "\n");
-		return;
-	}
+    // validate
+    if (length < 1) {
+        // SWS_PRINTF(RTT_ERROR_TEXT_DECORATOR("Bad data") + "\n");
+        return;
+    }
 
-	// uint8_t u8cmd   = (data[0]);
-	uint8_t* p_data = &data[0];
+    // uint8_t u8cmd = (data[0]);
+    uint8_t* p_data = &data[0];
 
-	// SWS_PRINTF("CALIB_CTRL_CMD_P0_WRITE\n");
-	uint32_t d_data = 0;
-	memcpy(&d_data, &p_data[0], sizeof(d_data));
-	
-	// flash_word_write(uint32_t* address, uint32_t value);
-	notify_char_update(p_sws, value);
+    // SWS_PRINTF("CALIB_CTRL_CMD_P0_WRITE\n");
+    uint32_t d_data = 0;
+    memcpy(&d_data, &p_data[0], sizeof(d_data));
+
+    // flash_word_write(uint32_t* address, uint32_t value);
+    // notify_char_update(p_sws, value);
 
 }
 
