@@ -100,7 +100,7 @@ static void timer_timeout_handler(void* p_context) {
     // OUR_JOB: Step 3.F, Update temperature and characteristic value.
     int32_t temperature = 0;
     sd_temp_get(&temperature);
-    /* our_termperature_characteristic_update(&m_our_service, &temperature);*/
+    our_termperature_characteristic_update(&m_our_service, &temperature);
     SEGGER_RTT_printf(0, "AFTER TEMP UPDATE %d\n", temperature);
     printFoodValue();
 }
