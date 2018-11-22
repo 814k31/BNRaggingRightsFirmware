@@ -415,19 +415,22 @@ static void advertising_init(void) {
 
 int flashWrite()
 {
-    uint32_t * addr;
+    uint32_t* addr = NULL;
 
-    uint32_t   pg_size;
-    uint32_t   pg_num;
+    uint32_t pg_size = NRF_FICR->CODEPAGESIZE;
+    uint32_t pg_num = NRF_FICR->CODESIZE - 1;  // Use last page in flash
 
-    // APP_ERROR_CHECK(err_code);
-    SEGGER_RTT_printf(0, "FLASHWRITE Function BNR example\n\r");
-    // patold  = 0;
-    pg_size = NRF_FICR->CODEPAGESIZE;
-    pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash
     addr = (uint32_t *)(pg_size * pg_num);
+
+    SEGGER_RTT_printf(0, "FLASHWRITE Function BNR example\n\r");
+    // APP_ERROR_CHECK(err_code);
+    // patold  = 0;
+
     SEGGER_RTT_printf(0, "before erased addr %c\n", *addr);
+
+    // Causes device to crash on reboot
     flash_page_erase(addr);
+
     SEGGER_RTT_printf(0, "read value before %c\n\n\n", *addr);
     flash_word_write(addr, (uint32_t)'c');
     SEGGER_RTT_printf(0, "read value after %c\n\n\n", *addr);
@@ -455,7 +458,7 @@ int main(void) {
 
     // Initialize.
     timers_init();
-    flashWrite();
+    // flashWrite();
     ble_stack_init();
 
     device_manager_init(erase_bonds);
