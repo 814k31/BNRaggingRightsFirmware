@@ -489,9 +489,9 @@ int main(void) {
         } else {
             // If not connected blink red light every half a second
             nrf_gpio_pin_write(17, 0);
-            nrf_delay_ms(500);
+            nrf_delay_ms(2000);
             nrf_gpio_pin_write(17, 1);
-            nrf_delay_ms(500);
+            nrf_delay_ms(2000);
 
             if (prevIsConnected) {
                 nrf_gpio_pin_write(19, 0);
