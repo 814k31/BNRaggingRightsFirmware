@@ -21,7 +21,7 @@
  *
  * @param page_address Address of the first word in the page to be erased.
  */
-static void flash_page_erase(uint32_t * page_address);
+// static void flash_page_erase(uint32_t * page_address);
 
 
 /** @brief Function for filling a page in flash with a value.
@@ -29,4 +29,4 @@ static void flash_page_erase(uint32_t * page_address);
  * @param[in] address Address of the first word in the page to be filled.
  * @param[in] value Value to be written to flash.
  */
-static void flash_word_write(uint32_t * address, uint32_t value);
+// static void flash_word_write(uint32_t * address, uint32_t value);

@@ -1,9 +1,9 @@
 
-// # RTT build config
-// RTT_SRCS = $(RTT_DIR)/RTT/SEGGER_RTT.c \
-//      $(RTT_DIR)/RTT/SEGGER_RTT_printf.c
+/*# RTT build config
+RTT_SRCS = $(RTT_DIR)/RTT/SEGGER_RTT.c \
+     $(RTT_DIR)/RTT/SEGGER_RTT_printf.c
 
-// RTT_INC = -I $(RTT_DIR)/RTT
+RTT_INC = -I $(RTT_DIR)/RTT*/
 
 /* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *

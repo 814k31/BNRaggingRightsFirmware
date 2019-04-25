@@ -44,7 +44,7 @@
 static void notify_char_update(ble_os_t *p_our_service, int32_t *value) {
 	if (p_our_service->conn_handle != BLE_CONN_HANDLE_INVALID) {
 		uint16_t length = 4;
-		uint8_t testValue = 0x0123BABE;
+		uint8_t testValue = (uint8_t) 0x0123BABE;
 		ble_gatts_hvx_params_t hvx_params;
 
 		memset(&hvx_params, 0, sizeof(hvx_params));
@@ -52,7 +52,7 @@ static void notify_char_update(ble_os_t *p_our_service, int32_t *value) {
 		hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
 		hvx_params.offset = 0;
 		hvx_params.p_len  = &length;
-		hvx_params.p_data = testValue;
+		hvx_params.p_data = &testValue;
 		// hvx_params.p_data = foodValue;
 
 		sd_ble_gatts_hvx(p_our_service->conn_handle, &hvx_params);
@@ -73,7 +73,7 @@ static void char_write(ble_os_t* p_sws, uint8_t* data, uint16_t length) {
 	uint32_t d_data = 0;
 	memcpy(&d_data, &p_data[0], sizeof(d_data));
 
-	notify_char_update(p_sws, d_data);
+	notify_char_update(p_sws, (int32_t *) &d_data);
 
 
 	// update_p0(p_sws, reference_pressure);
